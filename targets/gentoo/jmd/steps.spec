@@ -19,3 +19,7 @@ emerge $eopts net-mail/mailbase -1 || exit 1
 emerge $eopts mail-mta/postfix || exit 1
 emerge $eopts $[jmd/stage4/packages] || exit 1
 ]
+
+stage4-desktop: [
+emerge $eopts $[jmd/stage4-desktop/packages] || exit 1
+]
