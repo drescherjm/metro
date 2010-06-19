@@ -21,5 +21,31 @@ emerge $eopts $[jmd/stage4/packages] || exit 1
 ]
 
 stage4-desktop: [
+
+if [ "$[stage4-desktop/portage/files/package.use?]" = "yes" ]
+then
+cat >> /etc/portage/package.use << "EOF"
+$[[stage4-desktop/portage/files/package.use:lax]]
+EOF
+fi
+if [ "$[stage4-desktop/portage/files/package.keywords?]" = "yes" ]
+then
+cat >> /etc/portage/package.keywords << "EOF"
+$[[stage4-desktop/portage/files/package.keywords:lax]]
+EOF
+fi
+if [ "$[stage4-desktop/portage/files/package.unmask?]" = "yes" ]
+then
+cat >> /etc/portage/package.unmask << "EOF"
+$[[stage4-desktop/portage/files/package.unmask:lax]]
+EOF
+fi
+if [ "$[stage4-desktop/portage/files/package.mask?]" = "yes" ]
+then
+cat >> /etc/portage/package.mask << "EOF"
+$[[stage4-desktop/portage/files/package.mask:lax]]
+EOF
+fi
+
 emerge $eopts $[jmd/stage4-desktop/packages] || exit 1
 ]
