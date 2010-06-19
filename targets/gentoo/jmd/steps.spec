@@ -13,6 +13,32 @@ EOF
 ]
 
 stage4: [
+
+if [ "$[jmd/stage4/portage/files/package.use?]" = "yes" ]
+then
+cat >> /etc/portage/package.use << "EOF"
+$[[jmd/stage4/portage/files/package.use:lax]]
+EOF
+fi
+if [ "$[jmd/stage4/portage/files/package.keywords?]" = "yes" ]
+then
+cat >> /etc/portage/package.keywords << "EOF"
+$[[jmd/stage4/portage/files/package.keywords:lax]]
+EOF
+fi
+if [ "$[jmd/stage4/portage/files/package.unmask?]" = "yes" ]
+then
+cat >> /etc/portage/package.unmask << "EOF"
+$[[jmd/stage4/portage/files/package.unmask:lax]]
+EOF
+fi
+if [ "$[jmd/stage4/portage/files/package.mask?]" = "yes" ]
+then
+cat >> /etc/portage/package.mask << "EOF"
+$[[jmd/stage4/portage/files/package.mask:lax]]
+EOF
+fi
+
 emerge $eopts -C mail-mta/ssmtp mail-mta/nullmailer || exit 1
 rm -f /var/mail
 emerge $eopts net-mail/mailbase -1 || exit 1
@@ -22,28 +48,28 @@ emerge $eopts $[jmd/stage4/packages] || exit 1
 
 stage4-desktop: [
 
-if [ "$[stage4-desktop/portage/files/package.use?]" = "yes" ]
+if [ "$[jmd/stage4-desktop/portage/files/package.use?]" = "yes" ]
 then
 cat >> /etc/portage/package.use << "EOF"
-$[[stage4-desktop/portage/files/package.use:lax]]
+$[[jmd/stage4-desktop/portage/files/package.use:lax]]
 EOF
 fi
-if [ "$[stage4-desktop/portage/files/package.keywords?]" = "yes" ]
+if [ "$[jmd/stage4-desktop/portage/files/package.keywords?]" = "yes" ]
 then
 cat >> /etc/portage/package.keywords << "EOF"
-$[[stage4-desktop/portage/files/package.keywords:lax]]
+$[[jmd/stage4-desktop/portage/files/package.keywords:lax]]
 EOF
 fi
-if [ "$[stage4-desktop/portage/files/package.unmask?]" = "yes" ]
+if [ "$[jmd/stage4-desktop/portage/files/package.unmask?]" = "yes" ]
 then
 cat >> /etc/portage/package.unmask << "EOF"
-$[[stage4-desktop/portage/files/package.unmask:lax]]
+$[[jmd/stage4-desktop/portage/files/package.unmask:lax]]
 EOF
 fi
-if [ "$[stage4-desktop/portage/files/package.mask?]" = "yes" ]
+if [ "$[jmd/stage4-desktop/portage/files/package.mask?]" = "yes" ]
 then
 cat >> /etc/portage/package.mask << "EOF"
-$[[stage4-desktop/portage/files/package.mask:lax]]
+$[[jmd/stage4-desktop/portage/files/package.mask:lax]]
 EOF
 fi
 
