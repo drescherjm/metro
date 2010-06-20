@@ -48,6 +48,14 @@ emerge $eopts $[jmd/stage4/packages] || exit 1
 
 stage4-desktop: [
 
+#euse -E kde gnome X 
+
+if [ "$[jmd/stage4-desktop/portage/USE?]" = "yes" ]
+then
+  echo "Addding configuration USE flags"
+  euse -E "$[jmd/stage4-desktop/portage/USE:lax]"
+fi
+
 if [ "$[jmd/stage4-desktop/portage/files/package.use?]" = "yes" ]
 then
 cat >> /etc/portage/package.use << "EOF"
