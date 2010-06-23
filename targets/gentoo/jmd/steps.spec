@@ -50,6 +50,11 @@ stage4-desktop: [
 
 #euse -E kde gnome X 
 
+eselect profile set default/linux/amd64/10.0/desktop 
+
+USE="-ldap" emerge dev-libs/cyrus-sasl
+emerge openldap
+
 if [ "$[jmd/stage4-desktop/portage/USE?]" = "yes" ]
 then
   echo "Addding configuration USE flags"
@@ -82,4 +87,48 @@ EOF
 fi
 
 emerge $eopts $[jmd/stage4-desktop/packages] || exit 1
+]
+
+stage4-desktop-mutilib: [
+
+eselect profile set default/linux/amd64/10.0/desktop 
+
+layman -a multilib
+echo "source /var/lib/layman/make.conf" >> /etc/make.conf
+
+USE="-ldap" emerge dev-libs/cyrus-sasl
+emerge openldap
+
+if [ "$[jmd/stage4-desktop-mutilib/portage/USE?]" = "yes" ]
+then
+  echo "Addding configuration USE flags"
+  euse -E "$[jmd/stage4-desktop-mutilib/portage/USE:lax]"
+fi
+
+if [ "$[jmd/stage4-desktop-mutilib/portage/files/package.use?]" = "yes" ]
+then
+cat >> /etc/portage/package.use << "EOF"
+$[[jmd/stage4-desktop-mutilib/portage/files/package.use:lax]]
+EOF
+fi
+if [ "$[jmd/stage4-desktop-mutilib/portage/files/package.keywords?]" = "yes" ]
+then
+cat >> /etc/portage/package.keywords << "EOF"
+$[[jmd/stage4-desktop-mutilib/portage/files/package.keywords:lax]]
+EOF
+fi
+if [ "$[jmd/stage4-desktop-mutilib/portage/files/package.unmask?]" = "yes" ]
+then
+cat >> /etc/portage/package.unmask << "EOF"
+$[[jmd/stage4-desktop-mutilib/portage/files/package.unmask:lax]]
+EOF
+fi
+if [ "$[jmd/stage4-desktop-mutilib/portage/files/package.mask?]" = "yes" ]
+then
+cat >> /etc/portage/package.mask << "EOF"
+$[[jmd/stage4-desktop-mutilib/portage/files/package.mask:lax]]
+EOF
+fi
+
+emerge $eopts $[jmd/stage4-desktop-mutilib/packages] || exit 1
 ]
