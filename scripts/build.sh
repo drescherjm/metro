@@ -56,7 +56,7 @@ then
 	SUBARCH="${SUBARCH:1}"
 else
 # for stable builds, we create a traditional portage snapshot that is just a tarball of the physical files
-	BUILD="gentoo"
+	BUILD="jmd"
 fi
 mycmd="/usr/bin/metro multi: yes metro/build: $BUILD target/subarch: $SUBARCH target/version: $VERS multi/mode: $MODE"
 cat << EOF

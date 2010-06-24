@@ -93,6 +93,7 @@ stage4-desktop-mutilib: [
 
 eselect profile set default/linux/amd64/10.0/desktop 
 
+layman -S	
 layman -a multilib
 echo "source /var/lib/layman/make.conf" >> /etc/make.conf
 
@@ -104,6 +105,10 @@ then
   echo "Addding configuration USE flags"
   euse -E "$[jmd/stage4-desktop-mutilib/portage/USE:lax]"
 fi
+
+# The following is to avoid circular references with lib32
+USE="-ldap -gpm" emerge ncurses
+USE="-acl" emerge gettext
 
 if [ "$[jmd/stage4-desktop-mutilib/portage/files/package.use?]" = "yes" ]
 then
