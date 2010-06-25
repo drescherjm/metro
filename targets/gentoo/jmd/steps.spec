@@ -1,5 +1,5 @@
 [collect ./files.spec]
-[collect ./steps-stage4-multilib-desktop.spec]
+[collect ./steps-stage4-desktop-multilib.spec]
 
 [section steps/jmd]
 
