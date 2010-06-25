@@ -8,6 +8,8 @@ layman -S
 layman -a multilib
 echo "source /var/lib/layman/make.conf" >> /etc/make.conf
 
+echo 'SETARCH_ARCH_x86="i686"' >> /etc/make.conf
+
 if [ "$[jmd/stage4-desktop-multilib/portage/USE?]" = "yes" ]
 then
   echo "Addding configuration USE flags"
