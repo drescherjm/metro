@@ -8,9 +8,6 @@ layman -S
 layman -a multilib
 echo "source /var/lib/layman/make.conf" >> /etc/make.conf
 
-USE="-ldap" emerge dev-libs/cyrus-sasl
-emerge openldap
-
 if [ "$[jmd/stage4-desktop-multilib/portage/USE?]" = "yes" ]
 then
   echo "Addding configuration USE flags"
@@ -23,6 +20,9 @@ emerge -C openssl
 # The following is to avoid circular references with lib32
 USE="-ldap -gpm" emerge ncurses
 USE="-acl" emerge gettext
+
+USE="-ldap" emerge dev-libs/cyrus-sasl
+emerge openldap
 
 if [ "$[jmd/stage4-desktop-multilib/portage/files/package.use?]" = "yes" ]
 then
