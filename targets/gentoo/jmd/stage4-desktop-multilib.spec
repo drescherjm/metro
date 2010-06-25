@@ -10,8 +10,8 @@ target: $[:source/subpath]/$[target/name].tar.bz2
 
 [section target]
 
-name: stage4-desktop-mutilib-$[target/subarch]-$[target/version]
-name/current: stage4-desktop-mutilib-$[target/subarch]-current
+name: stage4-desktop-multilib-$[target/subarch]-$[target/version]
+name/current: stage4-desktop-multilib-$[target/subarch]-current
 
 [section steps]
 
@@ -21,7 +21,7 @@ $[[steps/setup]]
 $[[steps/jmd/setup]]
 
 export USE="$[portage/USE] bindist"
-$[[steps/jmd/stage4-desktop-mutilib]]
+$[[steps/jmd/stage4-desktop-multilib]]
 ]
 
 [section trigger]
