@@ -2,6 +2,8 @@
 
 stage4-desktop-multilib: [
 
+cp /usr/share/zoneinfo/$[jmd/stage4-desktop-multilib/timezone] /etc/localtime
+
 eselect profile set default/linux/amd64/10.0/desktop 
 
 layman -S	
@@ -19,6 +21,7 @@ fi
 # openssl improperly links if it is already installed
 emerge -C openssl
 
+emerge abi-wrapper
 # The following is to avoid circular references with lib32
 USE="-ldap -gpm" emerge ncurses
 USE="-acl" emerge gettext
