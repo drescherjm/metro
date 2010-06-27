@@ -216,26 +216,27 @@ def goGlob(myglob):
 
 def fileCheck(files,perms,uid=0,gid=0):
 	global abort
-	if type(perms) == StringType:
+	if type(perms) == type("foo"):
 		perms = [ perms ]
 	# If a secret file exists, then ensure it has proper perms, otherwise abort
 	for file in files:
 		myfile = os.path.normpath(root+"/"+file)
+		print(myfile)
 		if os.path.exists(myfile):
 			mystat = os.stat(myfile)
 			myperms = "%o" % mystat[ST_MODE]
 			myuid = mystat[ST_UID]
 			mygid = mystat[ST_GID]
 			if myperms not in perms:
-				print "ERROR: file %s does not have proper perms: %s (should be one of %s)" % ( myfile, myperms, perms )
+				print("ERROR: file %s does not have proper perms: %s (should be one of %s)" % ( myfile, myperms, perms ))
 				abort = True
 			else:
-				print "TEST: file %s OK" % myfile
+				print("TEST: file %s OK" % myfile)
 			if myuid != uid:
-				print "ERROR: file %s does not have uid of %i" % ( myfile, uid )
+				print("ERROR: file %s does not have uid of %i" % ( myfile, uid ))
 				abort = True
 			if mygid != gid:
-				print "ERROR: file %s does not have gid of %i" % ( myfile, gid )
+				print("ERROR: file %s does not have gid of %i" % ( myfile, gid ))
 				abort = True
 
 
@@ -249,7 +250,6 @@ if abort:
 	sys.exit(1)
 else:
 	sys.exit(0)
-
 ]
 
 unpack: [

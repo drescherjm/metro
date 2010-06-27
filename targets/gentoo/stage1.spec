@@ -60,14 +60,15 @@ buildpkgs = scan_profile("packages.build")
 
 for idx in range(0, len(pkgs)):
 	try:
-		bidx = buildpkgs.index(portage.dep_getkey(pkgs[idx]))
+		bidx = buildpkgs.index(portage.dep.Atom.getkey(pkgs[idx]))
 		buildpkgs[bidx] = pkgs[idx]
 		if buildpkgs[bidx][0:1] == "*":
 			buildpkgs[bidx] = buildpkgs[bidx][1:]
 	except: pass
 
-for b in buildpkgs: print b
-print
+for b in buildpkgs: print(b)
+
+
 ]
 
 [section steps]
