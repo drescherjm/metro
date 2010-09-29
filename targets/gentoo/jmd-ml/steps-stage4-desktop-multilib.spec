@@ -1,8 +1,8 @@
-[section steps/jmd]
+[section steps/jmd-ml]
 
 stage4-desktop-multilib: [
 
-cp /usr/share/zoneinfo/$[jmd/stage4-desktop-multilib/timezone] /etc/localtime
+cp /usr/share/zoneinfo/$[jmd-ml/stage4-desktop-multilib/timezone] /etc/localtime
 
 eselect profile set default/linux/amd64/10.0/desktop 
 
@@ -12,10 +12,10 @@ echo "source /var/lib/layman/make.conf" >> /etc/make.conf
 
 echo 'SETARCH_ARCH_x86="i686"' >> /etc/make.conf
 
-if [ "$[jmd/stage4-desktop-multilib/portage/USE?]" = "yes" ]
+if [ "$[jmd-ml/stage4-desktop-multilib/portage/USE?]" = "yes" ]
 then
   echo "Addding configuration USE flags"
-  euse -E "$[jmd/stage4-desktop-multilib/portage/USE:lax]"
+  euse -E "$[jmd-ml/stage4-desktop-multilib/portage/USE:lax]"
 fi
 
 # openssl improperly links if it is already installed
@@ -29,30 +29,30 @@ USE="-acl" emerge gettext
 USE="-ldap" emerge dev-libs/cyrus-sasl
 emerge openldap
 
-if [ "$[jmd/stage4-desktop-multilib/portage/files/package.use?]" = "yes" ]
+if [ "$[jmd-ml/stage4-desktop-multilib/portage/files/package.use?]" = "yes" ]
 then
 cat >> /etc/portage/package.use << "EOF"
-$[[jmd/stage4-desktop-multilib/portage/files/package.use:lax]]
+$[[jmd-ml/stage4-desktop-multilib/portage/files/package.use:lax]]
 EOF
 fi
-if [ "$[jmd/stage4-desktop-multilib/portage/files/package.keywords?]" = "yes" ]
+if [ "$[jmd-ml/stage4-desktop-multilib/portage/files/package.keywords?]" = "yes" ]
 then
 cat >> /etc/portage/package.keywords << "EOF"
-$[[jmd/stage4-desktop-multilib/portage/files/package.keywords:lax]]
+$[[jmd-ml/stage4-desktop-multilib/portage/files/package.keywords:lax]]
 EOF
 fi
-if [ "$[jmd/stage4-desktop-multilib/portage/files/package.unmask?]" = "yes" ]
+if [ "$[jmd-ml/stage4-desktop-multilib/portage/files/package.unmask?]" = "yes" ]
 then
 cat >> /etc/portage/package.unmask << "EOF"
-$[[jmd/stage4-desktop-multilib/portage/files/package.unmask:lax]]
+$[[jmd-ml/stage4-desktop-multilib/portage/files/package.unmask:lax]]
 EOF
 fi
-if [ "$[jmd/stage4-desktop-multilib/portage/files/package.mask?]" = "yes" ]
+if [ "$[jmd-ml/stage4-desktop-multilib/portage/files/package.mask?]" = "yes" ]
 then
 cat >> /etc/portage/package.mask << "EOF"
-$[[jmd/stage4-desktop-multilib/portage/files/package.mask:lax]]
+$[[jmd-ml/stage4-desktop-multilib/portage/files/package.mask:lax]]
 EOF
 fi
 
-emerge $eopts $[jmd/stage4-desktop-multilib/packages] || exit 1
+emerge $eopts $[jmd-ml/stage4-desktop-multilib/packages] || exit 1
 ]

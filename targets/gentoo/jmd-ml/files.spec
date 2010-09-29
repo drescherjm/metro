@@ -1,4 +1,4 @@
-[section jmd/files]
+[section jmd-ml/files]
 
 make.conf: [
 # These settings were set by the metro build script that automatically built this stage.
@@ -36,7 +36,7 @@ nameserver 8.8.4.4
 nameserver 8.8.8.8
 ]
 
-[section jmd/files/ec2]
+[section jmd-ml/files/ec2]
 
 fstab: [
 /dev/sda1  /         ext4    defaults        1 1

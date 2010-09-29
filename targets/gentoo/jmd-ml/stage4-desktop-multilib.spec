@@ -18,10 +18,10 @@ name/current: stage4-desktop-multilib-$[target/subarch]-current
 chroot/run: [
 #!/bin/bash
 $[[steps/setup]]
-$[[steps/jmd/setup]]
+$[[steps/jmd-ml-ml/setup]]
 
 export USE="$[portage/USE] bindist"
-$[[steps/jmd/stage4-desktop-multilib]]
+$[[steps/jmd-ml-ml/stage4-desktop-multilib]]
 ]
 
 [section trigger]

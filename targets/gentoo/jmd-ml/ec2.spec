@@ -24,16 +24,16 @@ target: $[:source/subpath]/$[target/name].tar.bz2
 chroot/run: [
 #!/bin/bash
 $[[steps/setup]]
-$[[steps/jmd/setup]]
+$[[steps/jmd-ml/setup]]
 
 export USE="$[portage/USE] bindist"
 
 # setup some stuff, so we can run out-of-the-box
 env-update && source /etc/profile
-cp /usr/share/zoneinfo/$[jmd/ec2/timezone] /etc/localtime
+cp /usr/share/zoneinfo/$[jmd-ml/ec2/timezone] /etc/localtime
 
 cat << "EOF" > /etc/fstab
-$[[jmd/files/ec2/fstab]]
+$[[jmd-ml/files/ec2/fstab]]
 EOF
 
 emerge $eopts net-misc/dhcpcd
@@ -42,9 +42,9 @@ rc-update add net.eth0 default
 emerge $eopts net-misc/openssh
 rc-update add sshd default
 
-emerge $eopts $[jmd/ec2/packages]
+emerge $eopts $[jmd-ml/ec2/packages]
 
-for service in $[jmd/ec2/services]; do
+for service in $[jmd-ml/ec2/services]; do
 	rc-update add ${service} default
 done
 

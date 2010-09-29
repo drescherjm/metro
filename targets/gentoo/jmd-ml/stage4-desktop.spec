@@ -18,10 +18,10 @@ name/current: stage4-desktop-$[target/subarch]-current
 chroot/run: [
 #!/bin/bash
 $[[steps/setup]]
-$[[steps/jmd/setup]]
+$[[steps/jmd-ml/setup]]
 
 export USE="$[portage/USE] bindist"
-$[[steps/jmd/stage4-desktop]]
+$[[steps/jmd-ml/stage4-desktop]]
 ]
 
 [section trigger]
