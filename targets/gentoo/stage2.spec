@@ -18,8 +18,8 @@ name: $[target]-$[target/subarch]-$[target/version]
 
 [section path/mirror]
 
-source: $[:source/subpath]/stage1-$[source/subarch]-$[source/version].tar.bz2
-target: $[:target/subpath]/$[target/name].tar.bz2
+source: $[:source/subpath]/stage1-$[source/subarch]-$[source/version].tar.*
+target: $[:target/subpath]/$[target/name].tar.$[target/compression]
 
 [section portage]
 
@@ -53,7 +53,7 @@ emerge --prune sys-devel/gcc || exit 1
 # build:
 
 unset USE
-emerge dev-lang/python || exit 1
+emerge $eopts --oneshot dev-lang/python || exit 1
 
 gcc-config $(gcc-config --get-current-profile)
 

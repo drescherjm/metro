@@ -20,7 +20,7 @@ name: $[]-$[:subarch]-$[:version]
 
 [section path/mirror]
 
-source: $[:source/subpath]/$[source/name].tar.bz2
+source: $[:source/subpath]/$[source/name].tar.*
 
 [section target]
 
@@ -32,7 +32,7 @@ ROOT: /tmp/stage1root
 
 [section path/mirror]
 
-target: $[:target/subpath]/$[target/name].tar.bz2
+target: $[:target/subpath]/$[target/name].tar.$[target/compression]
 
 [section files]
 
@@ -98,10 +98,38 @@ fi
 
 export ROOT="$[portage/ROOT]"
 install -d ${ROOT}
+#DEBUG:
+
+echo "/etc/make.conf contains:"
+cat /etc/make.conf
+echo
+echo "FEATURES is set to:"
+echo "$FEATURES"
+echo
+
 # It's important to merge baselayout first so it can set perms on key dirs
 emerge $eopts --nodeps baselayout || exit 1
+
+echo "/etc/make.conf contains:"
+cat /etc/make.conf
+echo
+echo "FEATURES is set to:"
+echo "$FEATURES"
+echo
+echo "Portage version"
+emerge --version
+echo
+
 emerge $eopts -p -v --noreplace --oneshot ${buildpkgs} || exit 3
 emerge $eopts --noreplace --oneshot ${buildpkgs} || exit 1
+
+# create minimal set of device nodes
+install -d ${ROOT}/{proc,sys,dev/pts,dev/shm}
+tmpdir=$(mktemp -d)
+wget -O- http://www.funtoo.org/archive/realdev/realdev-1.0.tar.bz2 | \
+tar xj -C $tmpdir
+$tmpdir/realdev-1.0/realdev ${ROOT}/dev
+rm -rf $tmpdir
 ]
 
 [section trigger]

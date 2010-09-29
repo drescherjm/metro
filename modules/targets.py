@@ -2,6 +2,7 @@ import os,string,imp,types,shutil
 from catalyst_support import *
 from stat import *
 import os
+from glob import glob
 
 bin={
 	"linux32": "/usr/bin/linux32",
@@ -250,8 +251,11 @@ class chroot(target):
 
 		# look for required files
 		for loc in [ "path/mirror/source" ]:
-			if not os.path.exists(self.settings[loc]):
+			matches = glob(self.settings[loc])
+			if len(matches) ==0:
 				raise MetroError,"Required file "+self.settings[loc]+" not found. Aborting."
+			elif len(matches) > 1:
+				raise MetroError,"Multiple matches found for required file pattern defined in '%s'; Aborting." % loc
 
 		# BEFORE WE CLEAN UP - MAKE SURE WE ARE UNMOUNTED
 		self.kill_chroot_pids()
@@ -311,14 +315,14 @@ class stage(chroot):
 			self.mounts.append("/usr/portage/distfiles")
 			self.mountmap["/usr/portage/distfiles"]=self.settings["path/distfiles"]
 
-		if not self.settings.has_key("portage/devices"):
-			# if device nodes aren't to be manually created, let's bind-mount our main system's device nodes in place
-			if self.settings["portage/ROOT"] != "/":
-				# this seems to be needed for libperl to build (x2p) during stage1 - so we'll mount it....
-				self.mounts.append("/dev")
-				self.mounts.append("/dev/pts")
-				self.mountmap["/dev"] = "/dev"
-				self.mountmap["/dev/pts"] = "/dev/pts"
+		# let's bind-mount our main system's device nodes in place
+		if self.settings["portage/ROOT"] != "/":
+			# this seems to be needed for libperl to build (x2p) during stage1 - so we'll mount it....
+			self.mounts.append("/dev")
+			self.mounts.append("/dev/pts")
+			self.mountmap["/dev"] = "/dev"
+			self.mountmap["/dev/pts"] = "/dev/pts"
+
 	def run(self):
 		if self.targetExists("path/mirror/target"):
 			if self.settings.has_key("trigger/ok/run"):
@@ -327,8 +331,11 @@ class stage(chroot):
 
 		# look for required files
 		for loc in [ "path/mirror/source", "path/mirror/snapshot" ]:
-			if not os.path.exists(self.settings[loc]):
+			matches = glob(self.settings[loc])
+			if len(matches) == 0:
 				raise MetroError,"Required file "+self.settings[loc]+" not found. Aborting."
+			elif len(matches) > 1:
+				raise MetroError,"Multiple matches found for required file pattern defined in '%s'; Aborting." % loc
 
 		# BEFORE WE CLEAN UP - MAKE SURE WE ARE UNMOUNTED
 		self.kill_chroot_pids()
