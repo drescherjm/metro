@@ -41,7 +41,12 @@ then
 	die "This script requires three or more arguments"
 fi
 
-VERS=`date +%Y%m%d`
+
+if [ "$VERS" = "" ]
+then
+	VERS=`date +%Y%m%d`
+fi
+
 BUILD="$1"
 shift
 MODE="$1"

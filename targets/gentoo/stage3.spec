@@ -30,6 +30,11 @@ fi
 
 USE="build" emerge --oneshot --nodeps portage || exit 1
 export USE="$[portage/USE] bindist"
+
+echo "Emerging Shadow"
+emerge --oneshot -k shadow || exit 1
+
+echo "Emerging the system set"
 emerge $eopts -e system || exit 1
 
 # zap the world file and emerge packages
