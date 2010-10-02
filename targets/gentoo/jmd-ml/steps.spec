@@ -1,5 +1,6 @@
 [collect ./files.spec]
 [collect ./steps-stage4.spec]
+[collect ./steps-stage4-multilib.spec]
 [collect ./steps-stage4-desktop.spec]
 [collect ./steps-stage4-desktop-multilib.spec]
 
