@@ -11,6 +11,8 @@ layman -a multilib
 echo "source /var/lib/layman/make.conf" >> /etc/make.conf
 
 echo 'SETARCH_ARCH_x86="i686"' >> /etc/make.conf
+mkdir -p /etc/portage/profile
+echo 'app-emulation/wine -scanner -gnutls -nas -dbus -hal -ldap -mp3' >> /etc/portage/profile/package.use.mask
 
 if [ "$[jmd-ml/stage4-multilib/portage/USE?]" = "yes" ]
 then
@@ -18,16 +20,17 @@ then
   euse -E "$[jmd-ml/stage4-multilib/portage/USE:lax]"
 fi
 
-# openssl improperly links if it is already installed
-emerge -C openssl
-
 emerge abi-wrapper
 # The following is to avoid circular references with lib32
-USE="-ldap -gpm" emerge ncurses
-USE="-acl" emerge gettext
+FEATURES="-ccache" USE="-ldap -gpm" emerge ncurses
+FEATURES="-ccache" USE="-acl" emerge gettext --nodeps
+
+# openssl improperly links if it is already installed
+emerge -C openssl
+emerge -eN readline
 
 USE="-ldap" emerge dev-libs/cyrus-sasl
-emerge openldap
+emerge openldap openssl
 
 if [ "$[jmd-ml/stage4-multilib/portage/files/package.use?]" = "yes" ]
 then
