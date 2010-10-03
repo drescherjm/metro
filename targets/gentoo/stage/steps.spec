@@ -26,7 +26,7 @@ then
 	then
 		emerge --oneshot --nodeps ccache || exit 2
 	fi
-	export CCACHE_DIR=/var/tmp/cache/compiler
+	export CCACHE_DIR=/var/tmp/cache/compiler/
 	export FEATURES="$FEATURES ccache"
 	/usr/bin/ccache -M 1G
 	# The ccache ebuild has a bug where it will install links in /usr/lib/ccache/bin to reflect the current setting of CHOST.
@@ -44,24 +44,24 @@ then
 	# this problem in the future. This problem crops up when you are using an i486-pc-linux-gnu CHOST stage3 to create an
 	# i686-pc-linux-gnu CHOST stage1. It will probably crop up whenever the CHOST gets changed. For now, it's fixed :)
 
-	if [ -e /usr/bin/ccache-config ]
-	then
-		for x in i386 i486 i586 i686 x86_64
-		do
-			ccache-config --remove-links $x-pc-linux-gnu
-		done
-		gccprofile="`gcc-config -c`"
-		if [ $? -eq 0 ]
-		then
-			gccchost=`gcc-config -S $gccprofile | cut -f1 -d" "`
-			echo "Setting ccache links to: $gccchost"
-			ccache-config --install-links $gccchost
-		else
-			echo "There was an error using gcc-config. Ccache not enabled."
-			unset CCACHE_DIR
-			export FEATURES="$FEATURES -ccache"
-		fi
-	fi
+	#if [ -e /usr/bin/ccache-config ]
+	#then
+	#	for x in i386 i486 i586 i686 x86_64
+	#	do
+	#		ccache-config --remove-links $x-pc-linux-gnu
+	#	done
+	#	gccprofile="`gcc-config -c`"
+	#	if [ $? -eq 0 ]
+	#	then
+	#		gccchost=`gcc-config -S $gccprofile | cut -f1 -d" "`
+	#		echo "Setting ccache links to: $gccchost"
+	#		ccache-config --install-links $gccchost
+	#	else
+	#		echo "There was an error using gcc-config. Ccache not enabled."
+	#		unset CCACHE_DIR
+	#		export FEATURES="$FEATURES -ccache"
+	#	fi
+	#fi
 fi
 if [ -e /var/tmp/cache/package ]
 then
