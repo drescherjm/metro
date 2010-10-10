@@ -36,12 +36,3 @@ nameserver 8.8.4.4
 nameserver 8.8.8.8
 ]
 
-[section jmd/files/ec2]
-
-fstab: [
-/dev/sda1  /         ext4    defaults        1 1
-none       /dev/pts  devpts  gid=5,mode=620  0 0
-none       /dev/shm  tmpfs   defaults        0 0
-none       /proc     proc    defaults        0 0
-none       /sys      sysfs   defaults        0 0
-]
