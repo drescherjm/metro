@@ -31,6 +31,9 @@ fi
 USE="build" emerge --oneshot --nodeps portage || exit 1
 export USE="$[portage/USE] bindist"
 
+echo "Emerging layman"
+emerge git layman
+
 echo "Emerging Shadow"
 emerge --oneshot -k shadow || exit 1
 
