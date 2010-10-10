@@ -5,5 +5,5 @@
 
 [section multi]
 
-targets: $[:snapshot] stage3-freshen $[:extras]
+targets: $[:snapshot] jmd-ml/stage3-freshen $[:extras]
 

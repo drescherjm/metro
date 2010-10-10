@@ -1,7 +1,7 @@
-[collect ../stage/common.spec]
-[collect ../stage/capture/tar.spec]
-[collect ../stage/stage3-derivative.spec]
-[collect ../stage/symlink.spec]
+[collect ./stage/common.spec]
+[collect ./stage/capture/tar.spec]
+[collect ./stage/stage3-derivative.spec]
+[collect ./stage/symlink.spec]
 [collect ./steps.spec]
 
 [section path/mirror]
