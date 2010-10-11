@@ -76,9 +76,9 @@ do
 		# ok, now TESTCHOST refers to our bogus CHOST, so we can do this:
 		# remove bogus /usr/bin entries:
 		rm -f /usr/bin/$TESTCHOST*
-		rm -rf /usr/$TESTCHOST
+		rm -rf --one-file-system /usr/$TESTCHOST
 		rm -f $prof
-		rm -rf /etc/env.d/gcc/config-$TESTCHOST
+		rm -rf --one-file-system /etc/env.d/gcc/config-$TESTCHOST
 	fi
 done
 # remove any remaining cruft in cached files...

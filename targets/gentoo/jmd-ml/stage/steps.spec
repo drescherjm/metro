@@ -117,7 +117,7 @@ fi
 #[option parse/strict]
 
 chroot/postclean: [
-rm -rf $[portage/ROOT]/tmp/*
+rm -rf --one-file-system $[portage/ROOT]/tmp/*
 ]
 
 chroot/clean: [
@@ -151,8 +151,8 @@ fi
 # exist in /tmp inside the chroot. So after this cleanup, any execution inside the chroot
 # won't work. This is normally okay.
 
-rm -rf $ROOT/var/tmp/* $ROOT/tmp/* $ROOT/root/* $ROOT/usr/portage $ROOT/var/log/* || exit 5
-rm -rf $ROOT/var/cache/edb/dep/*
+rm -rf --one-file-system $ROOT/var/tmp/* $ROOT/tmp/* $ROOT/root/* $ROOT/usr/portage $ROOT/var/log/* || exit 5
+rm -rf --one-file-system $ROOT/var/cache/edb/dep/*
 rm -f $ROOT/etc/{passwd,group,shadow}- $ROOT/etc/.pwd.lock
 rm -f $ROOT/etc/portage/bashrc
 install -d $ROOT/etc/portage
