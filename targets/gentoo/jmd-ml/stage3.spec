@@ -29,16 +29,39 @@ then
 fi
 
 USE="build" emerge --oneshot --nodeps portage || exit 1
-export USE="$[portage/USE] bindist"
-
-echo "Emerging layman"
-emerge git layman
+export USE="$[portage/USE] bindist lib32"
 
 echo "Emerging Shadow"
 emerge --oneshot -k shadow || exit 1
 
+echo "Emerging layman"
+emerge $eopts git layman -k || exit 1
+
+layman -S
+layman -a multilib
+echo "source /var/lib/layman/make.conf" >> /etc/make.conf
+
+echo 'SETARCH_ARCH_x86="i686"' >> /etc/make.conf
+mkdir -p /etc/portage/profile
+echo 'app-emulation/wine -scanner -gnutls -nas -dbus -hal -ldap -mp3' >> /etc/portage/profile/package.use.mask
+
+echo "Emerging ncurses"
+FEATURES="-ccache" USE="-ldap -gpm lib32" emerge $eopts ncurses || exit 1
+FEATURES="-ccache" emerge $eopts gpm --nodeps || exit 1
+#FEATURES="-ccache" USE="-ldap" emerge ncurses || exit 1
+
+echo "Emerging gettext"
+FEATURES="-ccache" USE="-acl lib32" emerge $eopts gettext --nodeps || exit 1
+FEATURES="-ccache" emerge $eopts acl || exit 1
+
+echo "Emerging glibc"
+emerge $eopts glibc || exit 1
+
+#echo "Emerge gpm"
+#FEATURES="-ccache" emerge $eopts  gpm || exit 1
+
 echo "Emerging the system set"
-emerge $eopts -e system || exit 1
+emerge $eopts -e system --keep-going || emerge $eopts -e system --keep-going || emerge $eopts -e system --keep-going || exit 1
 
 # zap the world file and emerge packages
 rm -f /var/lib/portage/world || exit 2
@@ -61,6 +84,8 @@ then
 	eselect vi set busybox
 fi
 ]
+
+euse -E lib32
 
 [section portage]
 
