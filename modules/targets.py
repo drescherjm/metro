@@ -237,11 +237,12 @@ class chroot(target):
 		return outlist
 
 	def checkMounts(self):
+		# JMD: Disable this to prevent umountimg on failure.
 		mymounts = self.getActiveMounts()
-		#if len(mymounts) == 0:
-		#	return
-		#else:
-		#	self.unbind()
+		if len(mymounts) == 0:
+			return
+		else:
+			self.unbind()
 
 	def run(self):
 		if self.targetExists("path/mirror/target"):
