@@ -62,7 +62,7 @@ die() {
 
 trap "die user interrupt - Removing incomplete template..." INT
 
-rm -rf /tmp/steps || die "Steps cleanup fail"
+rm -rf --one-file-system /tmp/steps || die "Steps cleanup fail"
 outdir=`dirname $[path/mirror/target]`
 if [ ! -d $outdir ]
 then
@@ -167,7 +167,7 @@ EOF
 	cat > /etc/motd << "EOF"
 $[[files/motd]]
 EOF
-	rm -rf /etc/ssh/ssh_host* /var/tmp/* /var/log/* /tmp/* /root/.bash_history /etc/resolv.conf
+	rm -rf --one-file-system /etc/ssh/ssh_host* /var/tmp/* /var/log/* /tmp/* /root/.bash_history /etc/resolv.conf
 
 	# TESTS
 	echo "Performing QA checks..."

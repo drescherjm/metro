@@ -93,7 +93,7 @@ class target:
 			path = self.settings["path/work"]
 		if os.path.exists(path):
 			print "Cleaning up %s..." % path
-		self.cmd(bin["rm"]+" -rf "+path)
+		self.cmd(bin["rm"]+" -rf --one-file-system "+path)
 		if recreate:
 			# This line ensures that the root /var/tmp/metro path has proper 0700 perms:
 			self.cmd(bin["install"]+" -d -m 0700 -g root -o root " + self.settings["path/tmp"])

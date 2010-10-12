@@ -129,7 +129,7 @@ tmpdir=$(mktemp -d)
 wget -O- http://www.funtoo.org/archive/realdev/realdev-1.0.tar.bz2 | \
 tar xj -C $tmpdir
 $tmpdir/realdev-1.0/realdev ${ROOT}/dev
-rm -rf $tmpdir
+rm -rf --one-file-system $tmpdir
 ]
 
 [section trigger]
