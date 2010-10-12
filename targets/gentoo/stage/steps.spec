@@ -104,7 +104,7 @@ fi
 if [ "$[portage/devices?]" = "yes" ]
 then
 	#emerge -C sys-apps/makedev
-	emerge --oneshot --nodeps sys-apps/makedev || exit 2
+	FEATURES="-collision-protect" emerge --oneshot --nodeps sys-apps/makedev || exit 2
 	MAKEDEV -d "$[portage/ROOT]/dev/" "$[portage/devices:lax]"
 	emerge -C sys-apps/makedev
 fi
