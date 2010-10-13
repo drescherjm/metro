@@ -107,7 +107,7 @@ then
 
 	if ! [ -e /sbin/MAKEDEV ] 
 	then
-	  	emerge --oneshot --nodeps sys-apps/makedev || exit 2
+	  	emerge --oneshot --nodeps sys-apps/makedev
 		MAKEDEV -d "$[portage/ROOT]/dev/" "$[portage/devices:lax]"
 		emerge -C sys-apps/makedev
 	else
