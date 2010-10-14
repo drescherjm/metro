@@ -96,9 +96,9 @@ class target:
 		self.cmd(bin["rm"]+" -rf --one-file-system "+path)
 		if recreate:
 			# This line ensures that the root /var/tmp/metro path has proper 0700 perms:
-			self.cmd(bin["install"]+" -d -m 0700 -g root -o root " + self.settings["path/tmp"])
+			self.cmd(bin["install"]+" -d -m 0770 -g root -o portage " + self.settings["path/tmp"])
 			# This creates the directory we want.
-			self.cmd(bin["install"]+" -d -m 0700 -g root -o root "+path)
+			self.cmd(bin["install"]+" -d -m 0770 -g root -o portage "+path)
 			# The 0700 perms prevent Metro-generated /tmp directories from being abused by others -
 			# because they are world-writeable, they could be used by malicious local users to
 			# inject arbitrary data/executables into a Metro build.
