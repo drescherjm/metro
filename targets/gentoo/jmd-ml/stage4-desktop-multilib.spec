@@ -6,7 +6,7 @@
 
 [section path/mirror]
 
-target: $[:source/subpath]/$[target/name].tar.bz2
+target: $[:source/subpath]/$[target/name].tar.xz
 
 [section target]
 
