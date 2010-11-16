@@ -23,7 +23,7 @@ do_help() {
 EOF
 }
 
-if [ ! -e /usr/bin/metro ]
+if [ ! -e $(which metro) ]
 then
 	die "Metro is required for build.sh to run"
 fi
@@ -58,7 +58,7 @@ else
 # for stable builds, we create a traditional portage snapshot that is just a tarball of the physical files
 	BUILD="gentoo"
 fi
-mycmd="/usr/bin/metro multi: yes metro/build: $BUILD target/subarch: $SUBARCH target/version: $VERS multi/mode: $MODE"
+mycmd="$(which metro) multi: yes metro/build: $BUILD target/subarch: $SUBARCH target/version: $VERS multi/mode: $MODE"
 cat << EOF
 
   PLEASE NOTE:
