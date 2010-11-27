@@ -58,7 +58,7 @@ with the priority system to define paths.
 Add priority option for when and section annotations, so Metro can
 choose one based on priority if multiple ones match.
 
-ISO support
+ISO support DONE
 
 add kernel build support (genkernel or raw)
 

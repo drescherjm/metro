@@ -1,0 +1,3 @@
+[section multi]
+
+targets: $[:snapshot] $[:extras]

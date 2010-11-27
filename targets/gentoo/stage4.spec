@@ -16,9 +16,22 @@ chroot/run: [
 #!/bin/bash
 $[[steps/setup]]
 export USE="$[portage/USE] bindist"
-emerge $eopts $[emerge/packages] || exit 1
+emerge $eopts $[emerge/packages/stage4] || exit 1
 ]
 
 [section portage]
 
 ROOT: /
+
+[section trigger]
+
+ok/run: [
+#!/bin/bash
+
+# We completed a successful stage4 build, so record the version of this build in our
+# .control/version/stage4 file so that other builds can see that this new version is
+# available.
+
+install -d $[path/mirror/control]/version || exit 1
+echo "$[target/version]" > $[path/mirror/control]/version/stage4 || exit 1
+]
