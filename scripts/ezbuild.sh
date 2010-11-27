@@ -27,7 +27,7 @@ EOF
 
 if [ "$METRO" = "" ]
 then
-	METRO=/usr/bin/metro
+	METRO=$(which metro)
 fi
 
 if [ ! -e $METRO ]
