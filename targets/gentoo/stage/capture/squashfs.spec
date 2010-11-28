@@ -65,13 +65,14 @@ $[[iso/files/cdupdate.sh:lax]]
 EOF
 fi
 
-if test "[iso/memtest?]" = "yes" && test -f "$[iso/memtest]"; then
+if test "$[iso/memtest?]" = "yes" && test -f "$[iso/memtest]"; then
 	cp "$[iso/memtest] "$workdir/isolinux/$(basename "$[iso/memtest]")
 	cat <<EOF >>$workdir/isolinux/isolinux.cfg
 
 label memtest
 kernel $(basename "$[iso/memtest]")
 EOF
+fi
 
 test "$[iso/files/extra?]" = "yes" && for f in $[iso/files/extra]; do
 	if test -f "$f"; then
@@ -81,12 +82,12 @@ test "$[iso/files/extra?]" = "yes" && for f in $[iso/files/extra]; do
 	fi
 done
 
-volid="-V ${squashout%%.squashfs}" # This hack beats all hacks
+#volid="-V ${squashout%%.squashfs}" # This hack beats all hacks
 mkisofs -l -o $[path/mirror/target] \
 	-b isolinux/$(basename "$[iso/binfile]") \
 	-c isolinux/boot.cat -no-emul-boot -boot-load-size 4 \
-	-boot-info-table $volid \
-		$workdir/
+	-boot-info-table \
+		$workdir/ || exit 1
 
 test "$[iso/hybrid?]" = "yes" $$ isohybrid $[path/mirror/target]
 
