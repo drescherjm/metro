@@ -32,7 +32,7 @@ cd $workdir
 mkdir -p $workdir/isolinux
 
 # XXX: These tests should go earlier.
-if test "$[iso/binfile?]" = "no" || test !-f "$[iso/binfile]"; then
+if test "$[iso/binfile?]" = "no" || test ! -f "$[iso/binfile]"; then
 	echo "No ISO 9660 boot code data found - aborting"
 	exit 1 # XXX: change exit code to be less generic
 fi
@@ -65,12 +65,12 @@ $[[iso/files/cdupdate.sh:lax]]
 EOF
 fi
 
-if test "[iso/memtest?]" = "yes" && test -f "$[iso/memtest]"; then
+if test "[iso/memfile?]" = "yes" && test -f "$[iso/memtest]"; then
 	cp "$[iso/memtest] "$workdir/isolinux/$(basename "$[iso/memtest]")
 	cat <<EOF >>$workdir/isolinux/isolinux.cfg
 
 label memtest
-kernel $(basename "$[iso/memfile]")
+kernel $(basename "$[iso/memtest]")
 EOF
 
 volid="-V ${squashout%%.squashfs}" # This hack beats all hacks
