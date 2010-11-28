@@ -9,7 +9,7 @@ then
 fi
 squashout="$[path/mirror/target]"
 squashout="${squashout%.*}.squashfs"
-mksquashfs $[path/chroot/stage] $squashout
+mksquashfs $[path/chroot/stage] $squashout -noappend
 if [ $? -ge 2 ]
 then
 	rm -f "$squashout" "$[path/mirror/target]"
