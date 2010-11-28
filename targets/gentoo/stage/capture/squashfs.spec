@@ -65,7 +65,7 @@ $[[iso/files/cdupdate.sh:lax]]
 EOF
 fi
 
-if test "[iso/memfile?]" = "yes" && test -f "$[iso/memtest]"; then
+if test "[iso/memtest?]" = "yes" && test -f "$[iso/memtest]"; then
 	cp "$[iso/memtest] "$workdir/isolinux/$(basename "$[iso/memtest]")
 	cat <<EOF >>$workdir/isolinux/isolinux.cfg
 
