@@ -32,30 +32,28 @@ cd $workdir
 mkdir -p $workdir/isolinux
 
 # XXX: These tests should go earlier.
-if test "$[iso/binfile?]" = "no" || test ! -f "$[iso/binfile]"; then
+if test -f "$[iso/binfile:lax]"; then
+	cp "$[iso/binfile]" "$workdir/isolinux"
+else
 	echo "No ISO 9660 boot code data found - aborting"
 	exit 1 # XXX: change exit code to be less generic
-fi
-
-if test -f "$[iso/binfile]"; then # XXX: Double test (see above)
-	cp "$[iso/binfile]" "$workdir/isolinux"
 fi
 
 cp "$squashout" "$workdir/image.squashfs"
 test -d "squashfs-root" && rm -fr "squashfs-root"
 unsquashfs $workdir/image.squashfs boot/*
 
-## Bug: if this matches more than one
-cp squashfs-root/boot/kernel* $workdir/isolinux/kernel
-cp squashfs-root/boot/initramfs* $workdir/isolinux/initramfs
-cp squashfs-root/boot/System.map* $workdir/isolinux/System.map
+## If this matches more than one, error out.
+cp -T squashfs-root/boot/kernel* $workdir/isolinux/kernel || exit 1
+cp -T squashfs-root/boot/initramfs* $workdir/isolinux/initramfs || exit 1
+cp -T squashfs-root/boot/System.map* $workdir/isolinux/System.map
 rm -fr squashfs-root
 
 touch $workdir/livecd
 
 if test "$[iso/files/isolinux.cfg?]" = "yes"; then
 	cat >$workdir/isolinux/isolinux.cfg << "EOF"
-$[[iso/files/isolinux.cfg:lax]]
+$[[iso/files/isolinux.cfg]]
 EOF
 fi
 
@@ -65,8 +63,8 @@ $[[iso/files/cdupdate.sh:lax]]
 EOF
 fi
 
-if test "$[iso/memtest?]" = "yes" && test -f "$[iso/memtest]"; then
-	cp "$[iso/memtest] "$workdir/isolinux/$(basename "$[iso/memtest]")
+if test "$[iso/memtest?]" = "yes" && test -f "$[iso/memtest:lax]"; then
+	cp "$[iso/memtest]" "$workdir/isolinux/$(basename "$[iso/memtest]")"
 	cat <<EOF >>$workdir/isolinux/isolinux.cfg
 
 label memtest
@@ -74,7 +72,7 @@ kernel $(basename "$[iso/memtest]")
 EOF
 fi
 
-test "$[iso/files/extra?]" = "yes" && for f in $[iso/files/extra]; do
+for f in $[iso/files/extra:lax]; do
 	if test -f "$f"; then
 		cp "$f" "$workdir/"
 	elif test -d "$f"; then
@@ -89,12 +87,13 @@ mkisofs -l -o $[path/mirror/target] \
 	-boot-info-table \
 		$workdir/ || exit 1
 
-test "$[iso/hybrid?]" = "yes" $$ isohybrid $[path/mirror/target]
+test "$[iso/hybrid:zap]" = "yes" && isohybrid $[path/mirror/target]
 
 cd - # Return to normal (doesn't really matter unless it does)
-if test "$[iso/gpgkey?]" = "yes" && test "$[iso/gpgkey]"; then
-	gpg --detach-sign --armor --local-user "$[iso/gpgkey]" \
-		$[path/mirror/target]
+
+if test "$[iso/gpgkey?]" = "yes"; then
+	gpg --detach-sign --armor --local-user "$[iso/gpgkey:zap]" \
+		$[path/mirror/target] && \
 	gpg --verify $[path/mirror/target].asc $[path/mirror/target]
 fi
 
