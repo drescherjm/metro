@@ -73,6 +73,14 @@ label memtest
 kernel $(basename "$[iso/memtest]")
 EOF
 
+test "$[iso/files/extra?]" = "yes" && for f in $[iso/files/extra]; do
+	if test -f "$f"; then
+		cp "$f" "$workdir/"
+	elif test -d "$f"; then
+		cp -r "$f" "$workdir/"
+	fi
+done
+
 volid="-V ${squashout%%.squashfs}" # This hack beats all hacks
 mkisofs -l -o $[path/mirror/target] \
 	-b isolinux/$(basename "$[iso/binfile]") \
