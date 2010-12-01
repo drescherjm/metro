@@ -16,7 +16,7 @@ chroot/run: [
 #!/bin/bash
 $[[steps/setup]]
 export USE="$[portage/USE] bindist"
-emerge $eopts $[emerge/packages/stage4] || exit 1
+emerge $eopts $[emerge/packages/stage4:zap] || exit 1
 ]
 
 [section portage]
