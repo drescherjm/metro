@@ -38,3 +38,14 @@ for i in $[iso/services:zap]; do ln -s /etc/init.d/$i /etc/runlevels/default; do
 [section portage]
 
 ROOT: /
+
+[section trigger]
+
+ok/run: [
+#!/bin/bash
+
+# The stage5.squashfs isn't needed (if it is, take it from the iso:
+squashout="$[path/mirror/target]"
+rm -f "${squashout%%.*}.squashfs"
+
+]
