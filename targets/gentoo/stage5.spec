@@ -29,10 +29,10 @@ chroot/run: [
 $[[steps/setup]]
 USE=-dynamic emerge $eopts cryptsetup || exit 1
 echo > /etc/fstab || exit 1
-#genkernel --lvm --dmraid --luks all || exit 1
-genkernel --lvm all || exit 1
+genkernel $[genkernel/opts:lax] all || exit 1
 sed -i -e '/^c/s!agetty 38400!mingetty --autologin root --noclear!' \
 	/etc/inittab || exit 1
+for i in $[iso/services:zap]; do ln -s /etc/init.d/$i /etc/runlevels/default; done
 ]
 
 [section portage]
