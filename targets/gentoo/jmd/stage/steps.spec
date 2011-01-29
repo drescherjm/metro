@@ -6,8 +6,20 @@ rm -f /etc/make.profile
 ln -sf ../usr/portage/profiles/$[portage/profile] /etc/make.profile || exit 1
 echo "Set Portage profile to $[portage/profile]."
 
-cd /etc/portage
+cd /usr/local
 git clone git://github.com/drescherjm/gentoo-keywords.git
+git checkout origin/base
+
+cd /etc/portage
+rm --one-file-system -rf package.keywords
+rm --one-file-system -rf package.mask
+rm --one-file-system -rf package.unmask
+rm --one-file-system -rf package.use
+
+ln -s /usr/local/gentoo-keywords/package.keywords
+ln -s /usr/local/gentoo-keywords/package.mask
+ln -s /usr/local/gentoo-keywords/package.unmask
+ln -s /usr/local/gentoo-keywords/package.use
 
 ]
 
@@ -81,30 +93,30 @@ FEATURES="$FEATURES -sandbox"
 cat > /etc/make.conf << "EOF"
 $[[files/make.conf]]
 EOF
-if [ "$[portage/files/package.use?]" = "yes" ]
-then
-cat > /etc/portage/package.use << "EOF"
-$[[portage/files/package.use:lax]]
-EOF
-fi
-if [ "$[portage/files/package.keywords?]" = "yes" ]
-then
-cat > /etc/portage/package.keywords << "EOF"
-$[[portage/files/package.keywords:lax]]
-EOF
-fi
-if [ "$[portage/files/package.unmask?]" = "yes" ]
-then
-cat > /etc/portage/package.unmask << "EOF"
-$[[portage/files/package.unmask:lax]]
-EOF
-fi
-if [ "$[portage/files/package.mask?]" = "yes" ]
-then
-cat > /etc/portage/package.mask << "EOF"
-$[[portage/files/package.mask:lax]]
-EOF
-fi
+#if [ "$[portage/files/package.use?]" = "yes" ]
+#then
+#cat > /etc/portage/package.use << "EOF"
+#$[[portage/files/package.use:lax]]
+#EOF
+#fi
+#if [ "$[portage/files/package.keywords?]" = "yes" ]
+#then
+#cat > /etc/portage/package.keywords << "EOF"
+#$[[portage/files/package.keywords:lax]]
+#EOF
+#fi
+#if [ "$[portage/files/package.unmask?]" = "yes" ]
+#then
+#cat > /etc/portage/package.unmask << "EOF"
+#$[[portage/files/package.unmask:lax]]
+#EOF
+#fi
+#if [ "$[portage/files/package.mask?]" = "yes" ]
+#then
+#cat > /etc/portage/package.mask << "EOF"
+#$[[portage/files/package.mask:lax]]
+#EOF
+#fi
 if [ "$[portage/devices?]" = "yes" ]
 then
 	#emerge -C sys-apps/makedev

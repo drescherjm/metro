@@ -3,7 +3,7 @@
 
 [section source]
 
-: stage1
+: jmd/stage1
 
 # The collect annotation below will allow us to grab a remote stage1
 # for our build if $[strategy/build] is "remote" and $[strategy/seed]
@@ -18,8 +18,9 @@ name: $[target]-$[target/subarch]-$[target/version]
 
 [section path/mirror]
 
-source: $[:source/subpath]/stage1-$[source/subarch]-$[source/version].tar.*
-target: $[:target/subpath]/$[target/name].tar.$[target/compression]
+source: $[:source/subpath]/jmd/stage1-$[source/subarch]-$[source/version].tar.*
+#source: $[:target]/stage1-$[source/subarch]-$[source/version].tar.*
+target: $[:source/subpath]/$[target/name].tar.$[target/compression]
 
 [section portage]
 
