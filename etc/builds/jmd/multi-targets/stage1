@@ -5,4 +5,4 @@
 
 [section multi]
 
-targets: $[:snapshot] stage1
+targets: $[:snapshot] jmd/stage1
