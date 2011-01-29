@@ -5,6 +5,10 @@ chroot/prerun: [
 rm -f /etc/make.profile
 ln -sf ../usr/portage/profiles/$[portage/profile] /etc/make.profile || exit 1
 echo "Set Portage profile to $[portage/profile]."
+
+cd /etc/portage
+git clone git://github.com/drescherjm/gentoo-keywords.git
+
 ]
 
 #[option parse/lax]

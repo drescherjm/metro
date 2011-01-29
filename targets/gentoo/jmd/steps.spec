@@ -11,6 +11,8 @@ EOF
 cat << "EOF" > /etc/resolv.conf
 $[[jmd/files/resolv.conf]]
 EOF
+
+echo "SETUP SETUP SETUP"
 ]
 
 stage4: [
