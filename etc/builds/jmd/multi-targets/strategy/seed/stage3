@@ -1,4 +1,4 @@
 [section multi]
 
-targets: $[:snapshot] jmd1/stage1 jmd1/stage2 jmd1/stage3 $[:extras]
+targets: $[:snapshot] jmd/stage1 jmd/stage2 jmd/stage3 $[:extras]
 
