@@ -8,7 +8,7 @@
 
 [section source]
 
-: stage3
+: jmd/stage3
 name: $[]-$[:subarch]-$[:version]
 
 # When building a stage1, we're always going to use a stage3 as a seed. If
@@ -98,6 +98,20 @@ fi
 
 export ROOT="$[portage/ROOT]"
 install -d ${ROOT}
+
+git clone git://github.com/drescherjm/gentoo-keywords.git ${ROOT}/usr/local/gentoo-keywords
+git checkout origin/base
+
+rm --one-file-system -rf ${ROOT}/package.keywords
+rm --one-file-system -rf ${ROOT}/package.mask
+rm --one-file-system -rf ${ROOT}/package.unmask
+rm --one-file-system -rf ${ROOT}/package.use
+
+ln -s ${ROOT}/usr/local/gentoo-keywords/package.keywords ${ROOT}/etc/portage
+ln -s ${ROOT}/usr/local/gentoo-keywords/package.mask ${ROOT}/etc/portage
+ln -s ${ROOT}/usr/local/gentoo-keywords/package.unmask ${ROOT}/etc/portage
+ln -s ${ROOT}/usr/local/gentoo-keywords/package.use ${ROOT}/etc/portage
+
 #DEBUG:
 
 echo "/etc/make.conf contains:"
