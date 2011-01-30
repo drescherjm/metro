@@ -5,7 +5,7 @@
 [collect ./symlink.spec]
 
 [section path/mirror]
-target: $[:target/subpath]/$[target/name].tar.$[target/compression]
+target: $[:source/subpath]/$[target/name].tar.$[target/compression]
 
 [section target]
 

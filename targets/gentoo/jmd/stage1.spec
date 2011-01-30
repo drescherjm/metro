@@ -102,15 +102,15 @@ install -d ${ROOT}
 git clone git://github.com/drescherjm/gentoo-keywords.git ${ROOT}/usr/local/gentoo-keywords
 git checkout origin/base
 
-rm --one-file-system -rf ${ROOT}/package.keywords
-rm --one-file-system -rf ${ROOT}/package.mask
-rm --one-file-system -rf ${ROOT}/package.unmask
-rm --one-file-system -rf ${ROOT}/package.use
+install -d ${ROOT}/etc/portage
 
-ln -s ${ROOT}/usr/local/gentoo-keywords/package.keywords ${ROOT}/etc/portage
-ln -s ${ROOT}/usr/local/gentoo-keywords/package.mask ${ROOT}/etc/portage
-ln -s ${ROOT}/usr/local/gentoo-keywords/package.unmask ${ROOT}/etc/portage
-ln -s ${ROOT}/usr/local/gentoo-keywords/package.use ${ROOT}/etc/portage
+pushd .
+cd ${ROOT}/etc/portage
+ln -s ../../usr/local/gentoo-keywords/package.keywords 
+ln -s ../../usr/local/gentoo-keywords/package.mask 
+ln -s ../../usr/local/gentoo-keywords/package.unmask 
+ln -s ../../usr/local/gentoo-keywords/package.use 
+popd
 
 #DEBUG:
 
