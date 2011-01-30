@@ -357,14 +357,19 @@ class stage(chroot):
 			self.runScriptInChroot("steps/chroot/postrun")
 			self.unbind()
 			self.runScriptInChroot("steps/chroot/clean")
-			if self.settings.has_key("steps/chroot/test"):
-				self.runScriptInChroot("steps/chroot/test")
+			#if self.settings.has_key("steps/chroot/test"):
+			#	self.runScriptInChroot("steps/chroot/test")
 			if self.settings.has_key("steps/chroot/postclean"):
 				self.runScriptInChroot("steps/chroot/postclean")
 		except:
 			self.kill_chroot_pids()
 			self.checkMounts()
 			raise
+		
+	 	if self.settings.has_key("steps/chroot/test"):
+                	self.runScriptInChroot("steps/chroot/test")
+		
+		# JMD: Here is where to look..
 		# The build completed successfully.
 		# Capture the results of our efforts:
 		self.runScript("steps/capture")

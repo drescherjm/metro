@@ -189,6 +189,9 @@ if [ "$[emerge/packages/clean?]" == "yes" ]
 then
 	emerge -C $[emerge/packages/clean:lax] || exit 2
 fi
+
+echo "NO"
+exit 99
 ]
 
 chroot/test: [

@@ -141,10 +141,21 @@ fi
 
 chroot/postclean: [
 rm -rf --one-file-system $[portage/ROOT]/tmp/*
+
+echo "chroot/postclean end"
+ls -al /usr/local
+
 ]
 
 chroot/clean: [
 #!/bin/bash
+
+echo "chroot/clean"
+
+ls -al /usr/local
+
+#sleep 10m
+
 # We only do this cleanup if ROOT = / - in other words, if we are going to be packing up /,
 # then we need to remove the custom configuration we've done to /. If we are building a
 # stage1, then everything is in /tmp/stage1root so we don't need to do this.
@@ -157,7 +168,7 @@ then
 		echo "Cleaning chroot: $f..."
 		rm -f $f || exit 1
 	done
-	for f in /etc/resolv.conf /etc/hosts
+	for f in /etc/resolv.conf /etc/hosts	
 	do
 		[ -e $f ] && rm -f $f
 		if [ -e $f.orig ]
@@ -191,12 +202,23 @@ fi
 # locale-archive can be ~81 MB; this should shrink it to 2MB.
 rm -f /usr/lib*/locale/locale-archive
 locale-gen
+
+echo "chroot/clean end"
+ls -al /usr/local
+sleep 10s
+
 ]
 
 # do any cleanup that you need with things bind mounted here:
 
 chroot/postrun: [
 #!/bin/bash
+
+echo "chroot/postrun begin"
+ls -al /usr/local
+#sleep 1m
+
+
 if [ "$[target]" != "stage1" ] && [ -e /usr/bin/ccache ]
 then
 	emerge -C dev-util/ccache || exit 1
@@ -205,7 +227,20 @@ if [ "$[emerge/packages/clean?]" == "yes" ]
 then
 	emerge -C $[emerge/packages/clean:lax] || exit 2
 fi
+
+echo "chroot/postrun end"
+ls -al /usr/local
+#sleep 1m
+
 ]
+
+chroot/test0: [
+#!/bin/sh
+echo "chroot/test"
+ls -al /usr/local
+#sleep 10m
+]
+
 
 chroot/test: [
 #!/usr/bin/python

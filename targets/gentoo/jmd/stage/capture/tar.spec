@@ -2,6 +2,11 @@
 
 capture: [
 #!/bin/bash
+
+echo "Got HERE"
+
+ls -al $[path/chroot/stage]/usr/local
+
 outdir=`dirname $[path/mirror/target]`
 if [ ! -d $outdir ]
 then
