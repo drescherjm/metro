@@ -99,18 +99,10 @@ fi
 export ROOT="$[portage/ROOT]"
 install -d ${ROOT}
 
-git clone git://github.com/drescherjm/gentoo-keywords.git ${ROOT}/usr/local/gentoo-keywords
-git checkout origin/base
+current_root=${ROOT}
+$[[steps/gentoo_keywords/setup]]
 
-install -d ${ROOT}/etc/portage
-
-pushd .
-cd ${ROOT}/etc/portage
-ln -s ../../usr/local/gentoo-keywords/package.keywords 
-ln -s ../../usr/local/gentoo-keywords/package.mask 
-ln -s ../../usr/local/gentoo-keywords/package.unmask 
-ln -s ../../usr/local/gentoo-keywords/package.use 
-popd
+sleep 1h
 
 #DEBUG:
 

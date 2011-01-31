@@ -1,3 +1,5 @@
+[collect ../gentoo-keywords.spec]
+
 [section steps]
 
 chroot/prerun: [
@@ -5,30 +7,15 @@ chroot/prerun: [
 
 echo "Settings:"
 echo target=$[target]
-echo path/mirror/target/subpath=$[path/mirror/target/subpath:lax]
-echo path/mirror/target/subpath=$[path/mirror/target/subarch:lax]
-echo path/mirror/link=$[path/mirror/link:lax]
+echo path/mirror/target/subpath=$[path/mirror/target/subpath:zap]
+echo path/mirror/target/subarch=$[path/mirror/target/subarch:zap]
 echo source=$[source]
-echo path/mirror/source/subpath=$[path/mirror/source/subpath]
+echo path/mirror/source/subpath=$[path/mirror/source/subpath:zap]
+echo path/mirror/source/subarch=$[path/mirror/source/subarch:zap]
 
 rm -f /etc/make.profile
 ln -sf ../usr/portage/profiles/$[portage/profile] /etc/make.profile || exit 1
 echo "Set Portage profile to $[portage/profile]."
-
-cd /usr/local
-git clone git://github.com/drescherjm/gentoo-keywords.git
-git checkout origin/base
-
-cd /etc/portage
-rm --one-file-system -rf package.keywords
-rm --one-file-system -rf package.mask
-rm --one-file-system -rf package.unmask
-rm --one-file-system -rf package.use
-
-ln -s /usr/local/gentoo-keywords/package.keywords
-ln -s /usr/local/gentoo-keywords/package.mask
-ln -s /usr/local/gentoo-keywords/package.unmask
-ln -s /usr/local/gentoo-keywords/package.use
 
 ]
 
@@ -384,4 +371,9 @@ do
 		fi
 	fi
 done
+
+current_root=$[path/chroot]
+
+$[[steps/gentoo_keywords/setup]]
+
 ]
