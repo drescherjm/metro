@@ -100,9 +100,21 @@ export ROOT="$[portage/ROOT]"
 install -d ${ROOT}
 
 current_root=${ROOT}
-$[[steps/gentoo_keywords/setup]]
 
-sleep 1h
+if [ $[portage/gentoo_keywords/source?] == "yes" ]
+then
+        keywords_url=$[portage/gentoo_keywords/source]
+else
+        keywords_url=git://github.com/drescherjm/gentoo-keywords.git
+fi
+if [ $[portage/gentoo_keywords/branch?] == "yes" ];
+then
+        keywords_branch=$[portage/gentoo_keywords/branch]
+else
+        keywords_branch=base
+fi
+
+$[[steps/gentoo_keywords/setup]]
 
 #DEBUG:
 

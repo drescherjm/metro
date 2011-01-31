@@ -36,7 +36,7 @@ if [ -d /var/tmp/cache/compiler ]
 then
 	if ! [ -e /usr/bin/ccache ] 
 	then
-		emerge --oneshot --nodeps ccache || exit 2
+		emerge --oneshot --nodeps --quiet ccache || exit 2
 	fi
 	export CCACHE_DIR=/var/tmp/cache/compiler/
 	export FEATURES="$FEATURES ccache"
@@ -119,7 +119,7 @@ then
 
 	if ! [ -e /sbin/MAKEDEV ] 
 	then
-	  	emerge --oneshot --nodeps sys-apps/makedev
+	  	emerge --oneshot --nodeps --quiet sys-apps/makedev
 		MAKEDEV -d "$[portage/ROOT]/dev/" "$[portage/devices:lax]"
 		emerge -C sys-apps/makedev
 	else
@@ -373,6 +373,18 @@ do
 done
 
 current_root=$[path/chroot]
+if [ $[portage/gentoo_keywords/source?] == "yes" ]
+then
+	keywords_url=$[portage/gentoo_keywords/source]
+else
+	keywords_url=git://github.com/drescherjm/gentoo-keywords.git
+fi
+if [ $[portage/gentoo_keywords/branch?] == "yes" ];
+then
+	keywords_branch=$[portage/gentoo_keywords/branch]
+else
+	keywords_branch=base
+fi
 
 $[[steps/gentoo_keywords/setup]]
 

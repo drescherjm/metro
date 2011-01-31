@@ -2,8 +2,6 @@
 
 gentoo_keywords/setup: [
 
-if [ $[portage/gentoo_keywords/source?] == "yes" ]
-then
 	echo "Setting up package keywords to ${current_root}/usr/local/gentoo-keywords"
 
         pushd .
@@ -16,22 +14,16 @@ then
 			git pull
 			git fetch
 	   	else
-			git clone $[portage/gentoo_keywords/source]	
+			git clone ${keywords_url}
 		fi 
 	else
 		install -d ${current_root}/usr/local	
 		cd ${current_root}/usr/local	
-		git clone $[portage/gentoo_keywords/source]
+		git clone ${keywords_url}
 		cd gentoo-keywords
 	fi
 
-	if [ $[portage/gentoo_keywords/branch?] == "yes" ];
-	then
-		git checkout $[portage/gentoo_keywords/branch]
-	else
-		git checkout base
-	fi
-
+	git checkout ${keywords_branch}
 	git branch
 
         install -d ${current_root}/etc/portage
@@ -47,8 +39,6 @@ then
         ln -s ../../usr/local/gentoo-keywords/package.mask
         ln -s ../../usr/local/gentoo-keywords/package.unmask
         ln -s ../../usr/local/gentoo-keywords/package.use
-        popd
-
-fi
+	popd
 
 ]
