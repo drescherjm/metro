@@ -2,6 +2,15 @@
 
 chroot/prerun: [
 #!/bin/bash
+
+echo "Settings:"
+echo target=$[target]
+echo path/mirror/target/subpath=$[path/mirror/target/subpath:lax]
+echo path/mirror/target/subpath=$[path/mirror/target/subarch:lax]
+echo path/mirror/link=$[path/mirror/link:lax]
+echo source=$[source]
+echo path/mirror/source/subpath=$[path/mirror/source/subpath]
+
 rm -f /etc/make.profile
 ln -sf ../usr/portage/profiles/$[portage/profile] /etc/make.profile || exit 1
 echo "Set Portage profile to $[portage/profile]."
@@ -197,6 +206,7 @@ locale-gen
 
 chroot/postrun: [
 #!/bin/bash
+
 if [ "$[target]" != "stage1" ] && [ -e /usr/bin/ccache ]
 then
 	emerge -C dev-util/ccache || exit 1
@@ -281,6 +291,7 @@ else:
 
 unpack: [
 #!/bin/bash
+
 [ ! -d $[path/chroot] ] && install -d $[path/chroot]
 [ ! -d $[path/chroot]/tmp ] && install -d $[path/chroot]/tmp --mode=1777 || exit 2
 src="$(ls $[path/mirror/source])"
