@@ -10,8 +10,8 @@ target: $[:target/subpath]/jmd/$[target/name].tar.xz
 
 [section target]
 
-name: stage4-desktop-$[target/subarch]-$[target/version]
-name/current: stage4-desktop-$[target/subarch]-current
+name: stage4-gnome-$[target/subarch]-$[target/version]
+name/current: stage4-gnome-$[target/subarch]-current
 
 [section steps]
 
@@ -21,7 +21,7 @@ $[[steps/setup]]
 $[[steps/jmd/setup]]
 
 export USE="$[portage/USE] bindist"
-$[[steps/jmd/stage4-desktop]]
+$[[steps/jmd/stage4-gnome]]
 ]
 
 [section trigger]
