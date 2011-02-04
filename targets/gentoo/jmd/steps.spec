@@ -1,6 +1,7 @@
 [collect ./files.spec]
 [collect ./steps/steps-stage4.spec]
 [collect ./steps/steps-stage4-gnome.spec]
+[collect ./steps/steps-stage4-kde.spec]
 
 [section steps/jmd]
 

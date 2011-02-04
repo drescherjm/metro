@@ -6,7 +6,7 @@
 
 [section path/mirror]
 
-source: $[:source/subpath]/$[source/name].tar.*
+source: $[:source/subpath]/jmd/$[source/name].tar.*
 
 [section source]
 

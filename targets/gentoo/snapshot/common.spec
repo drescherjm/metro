@@ -18,7 +18,7 @@ type: repository
 
 # "current" symlink:
 link: $[:snapshot/subpath]/$[portage/name]-current.tar.$[target/compression]
-link/dest: $[portage/name/full].tar.$[target/compression]
+link/dest: jmd/$[portage/name/full].tar.$[target/compression]
 
 [section trigger]
 
