@@ -4,6 +4,11 @@ stage4-kde: [
 	
 	cd /usr/local/gentoo-keywords
 	git checkout kde
+
+	pushd .
+	cd /etc/portage
+	ln -s /usr/local/gentoo-keywords/sets
+	popd 
 	
 	options = ${eopts} --newuse --deep --keep-going=y 
 
