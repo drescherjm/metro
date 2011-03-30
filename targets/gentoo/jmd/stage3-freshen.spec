@@ -26,6 +26,9 @@ then
 	emerge $eopts @preserved-rebuild || exit 3
 fi
 # to handle lib upgrades, etc.
+
+revdep-rebuild
+
 ]
 #make sure the parser detects stray data out here....
 [section portage]

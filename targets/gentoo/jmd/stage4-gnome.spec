@@ -29,6 +29,8 @@ $[[steps/jmd/stage4-gnome]]
 
 ok/run: [
 $[[trigger/ok/symlink]]
+install -d $[path/mirror/control]/version/jmd || exit 1
+echo "$[target/version]" > $[path/mirror/control]/version/jmd/stage4-gnome || exit 1
 ]
 
 [section portage]

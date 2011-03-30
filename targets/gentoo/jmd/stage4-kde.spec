@@ -29,6 +29,8 @@ $[[steps/jmd/stage4-kde]]
 
 ok/run: [
 $[[trigger/ok/symlink]]
+install -d $[path/mirror/control]/version || exit 1
+echo "$[target/version]" > $[path/mirror/control]/version/jmd/stage4-kde || exit 1
 ]
 
 [section portage]

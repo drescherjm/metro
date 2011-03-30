@@ -34,14 +34,19 @@ export USE="$[portage/USE] bindist"
 echo "Emerging Shadow"
 emerge --oneshot -k shadow || exit 1
 
+python-updater
+
+emerge --oneshot gentoolkit
+revdep-rebuild
+
 echo "Emerging the system set"
-emerge $eopts -e system || exit 1
+emerge $eopts -e system || emerge -uDvNb system || exit 1
 
 # zap the world file and emerge packages
 rm -f /var/lib/portage/world || exit 2
 if [ "$[emerge/packages?]" = "yes" ]
 then
-	emerge $eopts $[emerge/packages:lax] || exit 1
+	emerge $eopts $[emerge/packages:lax] || emerge -uDvNb  $[emerge/packages:lax] || exit 1
 fi
 
 # add default runlevel services
@@ -57,6 +62,8 @@ if [ "$[metro/build]" = "funtoo" ] || [ "$[metro/build]" = "~funtoo" ]
 then
 	eselect vi set busybox
 fi
+
+revdep-rebuild
 ]
 
 [section portage]
