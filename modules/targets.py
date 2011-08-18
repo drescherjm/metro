@@ -166,7 +166,8 @@ class chroot(target):
 		for key, name, dest in [
 				[ "path/cache/compiler", "cache/compiler", "/var/tmp/cache/compiler" ] ,
 				[ "path/cache/package", "cache/package", "/var/tmp/cache/package" ] ,
-				[ "path/cache/probe", "probe", "/var/tmp/cache/probe" ] ]:
+				[ "path/cache/probe", "probe", "/var/tmp/cache/probe" ] ,
+				[ "path/cache/genkernel", "cache/genkernel","/var/tmp/cache/genkernel"] ]:
 			if self.settings.has_key(skey) and name in self.settings[skey].split():
 				if not self.settings.has_key(key):
 					raise MetroError, "Required setting %s not found (for %s option support)" % ( key, name )

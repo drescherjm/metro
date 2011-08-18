@@ -19,7 +19,7 @@ stage4-kde: [
 	ln -s /usr/local/gentoo-keywords/sets
 	popd 
 	
-	options = ${eopts} --newuse --deep --keep-going=y 
+	options="${eopts} --newuse --deep --keep-going=y --autounmask-write"
 
 	emerge ${options} system || emerge ${options} system || emerge ${options} system || emerge ${options} system
 	

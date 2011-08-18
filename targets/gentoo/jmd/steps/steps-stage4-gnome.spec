@@ -5,7 +5,7 @@ stage4-gnome: [
 	cd /usr/local/gentoo-keywords
 	git checkout gnome
 	
-	options = ${eopts} --newuse --deep --keep-going=y 
+	options="${eopts} --newuse --deep --keep-going=y --autounmask-write"
 
 	emerge ${options} system || emerge ${options} system || emerge ${options} system || emerge -uDvNB system
 	emerge ${options} world || emerge ${options} world || emerge ${options} world || emerge -uDvNB world
